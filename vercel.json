@@ -1,8 +1,6 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/api/auth/discord", "dest": "/api/auth/discord.js" },
-    { "src": "/api/(.*)", "dest": "/api/auth/discord.js" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
