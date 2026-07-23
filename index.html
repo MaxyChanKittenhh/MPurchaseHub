@@ -3,23 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meteor Purchase Hub</title>
+<title>Meteor Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #000;
-  --bg-elevated: rgba(20,20,20,0.6);
-  --glass: rgba(255,255,255,0.03);
-  --glass-border: rgba(255,255,255,0.08);
-  --glass-border-hover: rgba(255,255,255,0.15);
-  --glass-highlight: rgba(255,255,255,0.06);
+  --bg-elevated: #0a0a0a;
+  --card-bg: #0d0d0d;
+  --glass: rgba(255,255,255,0.02);
+  --glass-border: rgba(255,255,255,0.06);
+  --glass-border-hover: rgba(255,255,255,0.12);
   --text: #fff;
   --text-secondary: #888;
-  --text-muted: #444;
-  --accent: #00d4ff;
-  --accent-glow: rgba(0,212,255,0.15);
+  --text-muted: #555;
+  --accent: #fff;
   --success: #4ade80;
-  --warning: #fbbf24;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -32,53 +30,6 @@ body{
   overflow-x:hidden;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
-}
-
-/* ===== LIQUID GLASS BASE ===== */
-.glass {
-  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
-  border: 1px solid var(--glass-border);
-  box-shadow: 
-    0 8px 32px rgba(0,0,0,0.4),
-    inset 0 1px 0 rgba(255,255,255,0.05),
-    inset 0 -1px 0 rgba(0,0,0,0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-.glass::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -50%; right: -50%; bottom: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 40%,
-    rgba(255,255,255,0.03) 45%,
-    rgba(255,255,255,0.08) 50%,
-    rgba(255,255,255,0.03) 55%,
-    transparent 60%
-  );
-  transform: translateX(-100%);
-  animation: glass-shine 8s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes glass-shine {
-  0%, 100% { transform: translateX(-100%); }
-  50% { transform: translateX(100%); }
-}
-
-.glass-strong {
-  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-  backdrop-filter: blur(60px) saturate(200%);
-  -webkit-backdrop-filter: blur(60px) saturate(200%);
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 
-    0 12px 48px rgba(0,0,0,0.5),
-    inset 0 1px 0 rgba(255,255,255,0.08),
-    inset 0 -1px 0 rgba(0,0,0,0.3);
 }
 
 /* ===== LOGIN GATE ===== */
@@ -100,96 +51,68 @@ body{
   pointer-events: none;
 }
 
-.login-gate::before {
-  content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 800px; height: 800px;
-  background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 60%);
-  transform: translate(-50%, -50%);
-  animation: pulse-glow 6s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-  50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
-}
-
-.glass-card {
+.gate-card {
   padding: 60px 48px;
-  border-radius: 32px;
+  border-radius: 24px;
   text-align: center;
   max-width: 480px;
   width: 90%;
   z-index: 1;
 }
 
-.gate-logo {
-  font-size: 4rem;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.3) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 12px;
-}
-
-.gate-badge {
-  display: inline-flex;
+.gate-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 32px;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 16px;
-  border-radius: 100px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--accent);
-  border: 1px solid rgba(0,212,255,0.2);
-  background: rgba(0,212,255,0.05);
-  margin-bottom: 24px;
+  justify-content: center;
 }
 
-.gate-badge-dot {
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: pulse-dot 2s infinite;
+.gate-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(1.2);
 }
 
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(1.4); }
+.gate-logo {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 8px;
 }
 
 .gate-subtitle {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
   margin-bottom: 40px;
   line-height: 1.7;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .gate-btn {
-  padding: 16px 40px;
-  border-radius: 16px;
-  font-size: 1rem;
-  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   cursor: pointer;
   font-family: inherit;
-  border: none;
-  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05));
-  color: var(--accent);
-  border: 1px solid rgba(0,212,255,0.2);
-  transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
-  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.15);
+  background: var(--text);
+  color: var(--bg);
+  transition: all 0.3s ease;
 }
 
 .gate-btn:hover {
-  transform: translateY(-3px) scale(1.05);
-  background: linear-gradient(135deg, rgba(0,212,255,0.25), rgba(0,212,255,0.1));
-  border-color: rgba(0,212,255,0.4);
-  box-shadow: 0 0 40px rgba(0,212,255,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(255,255,255,0.1);
 }
 
 .gate-footer {
@@ -218,19 +141,32 @@ body{
   left: 50%;
   transform: translateX(-50%);
   z-index: 10000;
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: 100px;
   display: flex;
   align-items: center;
   gap: 24px;
   max-width: calc(100vw - 40px);
+  background: rgba(10,10,10,0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
 }
 
 .nav-brand {
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1rem;
   letter-spacing: -0.02em;
   color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-brand img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .nav-links {
@@ -282,172 +218,142 @@ body{
   text-align: center;
   padding: 140px 24px 80px;
   position: relative;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 30%; left: 50%;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 60%);
-  transform: translate(-50%, -50%);
-  animation: hero-glow 8s ease-in-out infinite;
-}
-
-@keyframes hero-glow {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-  50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.9; }
 }
 
 .hero-icon {
-  width: 80px; height: 80px;
-  border-radius: 24px;
+  width: 100px; height: 100px;
+  margin-bottom: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 32px;
-  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05));
-  border: 1px solid rgba(0,212,255,0.2);
-  color: var(--accent);
-  box-shadow: 0 0 60px rgba(0,212,255,0.1);
-  position: relative;
-  z-index: 1;
+}
+
+.hero-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(1.2);
 }
 
 .hero h1 {
-  font-size: clamp(3rem, 8vw, 6rem);
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 1;
-  background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.4) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  position: relative;
-  z-index: 1;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 16px;
 }
 
 .hero-tagline {
-  font-size: 1.3rem;
-  color: var(--accent);
-  font-weight: 500;
-  margin-top: 16px;
-  position: relative;
-  z-index: 1;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-bottom: 8px;
 }
 
 .hero-desc {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--text-secondary);
-  max-width: 540px;
-  margin-top: 20px;
+  max-width: 480px;
+  margin-top: 12px;
   line-height: 1.7;
-  position: relative;
-  z-index: 1;
 }
 
 .hero-cta {
   display: flex;
   gap: 16px;
-  margin-top: 32px;
+  margin-top: 40px;
   flex-wrap: wrap;
   justify-content: center;
-  position: relative;
-  z-index: 1;
 }
 
 .btn {
-  padding: 16px 40px;
-  border-radius: 16px;
-  font-size: 1rem;
-  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
   text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
   font-family: inherit;
   border: none;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,212,255,0.08));
-  color: var(--accent);
-  border: 1px solid rgba(0,212,255,0.3);
-  backdrop-filter: blur(20px);
+  background: var(--text);
+  color: var(--bg);
+  border: 1px solid var(--text);
 }
 
 .btn-primary:hover {
-  transform: translateY(-3px) scale(1.05);
-  background: linear-gradient(135deg, rgba(0,212,255,0.3), rgba(0,212,255,0.15));
-  border-color: rgba(0,212,255,0.5);
-  box-shadow: 0 0 50px rgba(0,212,255,0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(255,255,255,0.15);
 }
 
 .btn-secondary {
-  background: rgba(255,255,255,0.03);
+  background: transparent;
   color: var(--text);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border-hover);
 }
 
 .btn-secondary:hover {
-  border-color: var(--glass-border-hover);
-  background: rgba(255,255,255,0.06);
-  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.03);
 }
 
 /* PRODUCTS SECTION */
 .products-section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px 100px;
+  padding: 0 24px 120px;
 }
 
 .section-header {
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 64px;
 }
 
 .section-header h2 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   margin-bottom: 12px;
 }
 
 .section-header p {
   color: var(--text-secondary);
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
 }
 
 .product-card {
   padding: 40px;
-  border-radius: 28px;
-  transition: all 0.4s;
+  border-radius: 20px;
+  transition: all 0.4s ease;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
 }
 
 .product-card:hover {
-  border-color: rgba(0,212,255,0.15);
-  transform: translateY(-6px);
-  box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,212,255,0.05);
+  border-color: var(--glass-border-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
 }
 
 .product-card.featured {
-  border: 1px solid rgba(0,212,255,0.25);
-  background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, var(--card-bg) 100%);
 }
 
 .product-badge {
@@ -460,46 +366,42 @@ body{
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 16px;
-}
-
-.product-badge.hot {
-  background: rgba(0,212,255,0.1);
-  color: var(--accent);
-  border: 1px solid rgba(0,212,255,0.2);
+  margin-bottom: 20px;
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 .product-icon {
-  width: 56px; height: 56px;
-  border-radius: 16px;
+  width: 48px; height: 48px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 800;
   margin-bottom: 20px;
-  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05));
-  border: 1px solid rgba(0,212,255,0.2);
-  color: var(--accent);
-  box-shadow: 0 0 40px rgba(0,212,255,0.1);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text);
 }
 
 .product-card h3 {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 8px;
 }
 
 .product-card .product-desc {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.7;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   flex-grow: 1;
 }
 
 .product-price {
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--text);
@@ -507,13 +409,13 @@ body{
 }
 
 .product-price span {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: var(--text-muted);
 }
 
 .product-features {
-  margin: 20px 0 24px;
+  margin: 20px 0 28px;
   width: 100%;
 }
 
@@ -561,40 +463,46 @@ body{
 .delay-1 { animation-delay: 0.1s; }
 .delay-2 { animation-delay: 0.2s; }
 .delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
 
 @media(max-width:768px){
   .nav { padding: 10px 16px; gap: 12px; }
   .nav-links { display: none; }
-  .glass-card { padding: 40px 24px; }
+  .gate-card { padding: 40px 24px; }
   .hero { padding: 120px 16px 60px; }
   .products-grid { grid-template-columns: 1fr; }
+  .product-card { padding: 32px 24px; }
 }
 </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
 
 <!-- ===== LOGIN GATE ===== -->
 <div class="login-gate" id="loginGate">
-  <div class="glass glass-card">
-    <div class="gate-logo">Meteor</div>
-    <div class="gate-badge"><div class="gate-badge-dot"></div>Purchase Hub</div>
-    <div class="gate-subtitle">Your premium destination for developer tools.<br>Login to browse and purchase products.</div>
+  <div class="gate-card">
+    <div class="gate-icon">
+      <img src="https://cdn.discordapp.com/attachments/REPLACE/REPLACE/meteor.png" alt="Meteor" id="gateMeteorIcon">
+    </div>
+    <div class="gate-logo">Meteor Hub</div>
+    <div class="gate-subtitle">The future of Discord development.<br>Login to access the platform.</div>
     <button class="gate-btn" id="gateLoginBtn" onclick="discordLogin()">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
       Login with Discord
     </button>
   </div>
-  <div class="gate-footer">© 2026 Meteor Purchase Hub · Secure Discord OAuth2</div>
+  <div class="gate-footer">© 2026 Meteor Hub · Secure Discord OAuth2</div>
 </div>
 
 <!-- ===== MAIN APP ===== -->
 <div id="mainApp">
 
   <!-- Nav -->
-  <nav class="nav glass">
-    <div class="nav-brand">Meteor</div>
+  <nav class="nav">
+    <div class="nav-brand">
+      <img src="https://cdn.discordapp.com/attachments/REPLACE/REPLACE/meteor.png" alt="" id="navMeteorIcon">
+      Meteor
+    </div>
     <div class="nav-links">
       <a href="#home" class="nav-link">Home</a>
       <a href="#products" class="nav-link">Products</a>
@@ -608,9 +516,11 @@ body{
 
   <!-- Hero -->
   <section class="hero" id="home">
-    <div class="hero-icon fade-up">☄️</div>
-    <h1 class="fade-up delay-1">Meteor</h1>
-    <div class="hero-tagline fade-up delay-2">Purchase Hub</div>
+    <div class="hero-icon fade-up">
+      <img src="https://cdn.discordapp.com/attachments/REPLACE/REPLACE/meteor.png" alt="Meteor" id="heroMeteorIcon">
+    </div>
+    <h1 class="fade-up delay-1">Meteor Hub</h1>
+    <div class="hero-tagline fade-up delay-2">The future of Discord development</div>
     <p class="hero-desc fade-up delay-2">
       Premium tools and services for developers. Browse our curated catalog, purchase instantly, and supercharge your workflow.
     </p>
@@ -626,10 +536,10 @@ body{
       <p>Hand-picked tools built by developers, for developers.</p>
     </div>
     <div class="products-grid">
-      
+
       <!-- Swift Product Card -->
-      <div class="product-card glass featured fade-up delay-1">
-        <div class="product-badge hot">Featured</div>
+      <div class="product-card featured fade-up delay-1">
+        <div class="product-badge">Featured</div>
         <div class="product-icon">S</div>
         <h3>Swift</h3>
         <p class="product-desc">AI-Powered Roblox Coder. Generate complete Lua scripts, debug issues, and learn best practices with AI. Built exclusively for Roblox developers who want to ship faster.</p>
@@ -644,9 +554,9 @@ body{
         <a href="YOUR_BUY_URL_HERE" class="btn btn-primary" target="_blank">Buy Now →</a>
       </div>
 
-      <!-- Placeholder Product 2 -->
-      <div class="product-card glass fade-up delay-2">
-        <div class="product-icon" style="background: linear-gradient(135deg, rgba(250,204,21,0.15), rgba(250,204,21,0.05)); border-color: rgba(250,204,21,0.2); color: #facc15; box-shadow: 0 0 40px rgba(250,204,21,0.1);">⚡</div>
+      <!-- Velocity -->
+      <div class="product-card fade-up delay-2">
+        <div class="product-icon" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">⚡</div>
         <h3>Velocity</h3>
         <p class="product-desc">High-performance task runner for CI/CD pipelines. Cut your build times in half with intelligent caching and parallel execution.</p>
         <div class="product-price">$14.99<span>/month</span></div>
@@ -659,9 +569,9 @@ body{
         <a href="#" class="btn btn-secondary" style="width:100%;justify-content:center;">Coming Soon</a>
       </div>
 
-      <!-- Placeholder Product 3 -->
-      <div class="product-card glass fade-up delay-3">
-        <div class="product-icon" style="background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.05)); border-color: rgba(168,85,247,0.2); color: #a855f7; box-shadow: 0 0 40px rgba(168,85,247,0.1);">◈</div>
+      <!-- Prism -->
+      <div class="product-card fade-up delay-3">
+        <div class="product-icon" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">◈</div>
         <h3>Prism</h3>
         <p class="product-desc">Advanced analytics dashboard for SaaS metrics. Track MRR, churn, and user engagement with beautiful, real-time visualizations.</p>
         <div class="product-price">$19.99<span>/month</span></div>
@@ -679,7 +589,7 @@ body{
 
   <!-- Footer -->
   <footer class="footer">
-    <p>© 2026 Meteor Purchase Hub. All rights reserved.</p>
+    <p>© 2026 Meteor Hub. All rights reserved.</p>
   </footer>
 
 </div>
@@ -690,11 +600,20 @@ const DISCORD_CLIENT_ID = '1529762647669608448';
 const DISCORD_REDIRECT_URI = 'https://m-purchase-hub.vercel.app/';
 const DISCORD_SCOPE = 'identify';
 
+// ==================== METEOR ICON URL ====================
+// Replace this with your actual Discord CDN or hosted image URL
+const METEOR_ICON_URL = 'https://cdn.discordapp.com/attachments/1529703279532179486/1529799194292912158/meteorpngggg.webp?ex=6a634006&is=6a61ee86&hm=45f490bd412d0e563c16a18363b949505c45505e75ea7c9e6c2a86e70ae3f600&';
+
+// Apply icon to all image elements
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('img[id$="MeteorIcon"]').forEach(function(img) {
+    img.src = METEOR_ICON_URL;
+  });
+});
+
 // ==================== STATE ====================
 let currentUser = null;
-
-// ==================== LOCAL STORAGE ====================
-const LS_SESSION = 'swift_session';
+const LS_SESSION = 'meteor_session';
 
 // ==================== LOGIN GATE ====================
 function initGate() {
@@ -751,7 +670,7 @@ function handleOAuthCallback() {
 
   const btn = document.getElementById('gateLoginBtn');
   if (btn) {
-    btn.innerHTML = '<span style="display:inline-block;width:18px;height:18px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;"></span> Connecting...';
+    btn.innerHTML = '<span style="display:inline-block;width:16px;height:16px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;"></span> Connecting...';
     btn.disabled = true;
   }
 
@@ -778,7 +697,7 @@ function handleOAuthCallback() {
     console.error('OAuth error:', err);
     alert('Login failed: ' + err.message);
     if (btn) {
-      btn.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg> Login with Discord';
+      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg> Login with Discord';
       btn.disabled = false;
     }
   });
